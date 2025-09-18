@@ -19,3 +19,4 @@ __pycache__
 *.bak
 *.swp
 uv.lock
+.python-version
