@@ -58,6 +58,9 @@ weather-agent/
 5. Deploy 🎉
 
 ---
+![App Screenshot](images/Screenshot from 2025-09-19 02-12-04.png)
+
+
 
 ## 🚀 Deploy to Google Cloud Run
 
