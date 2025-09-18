@@ -6,7 +6,7 @@
 previews:
   generation: automatic # Enable preview environments
 
-ervices:
+services:
   - type: web
     name: weather-agent
     env: python
