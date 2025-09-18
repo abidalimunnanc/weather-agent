@@ -1,0 +1,27 @@
+from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain.agents import initialize_agent, Tool
+
+# Define a simple weather tool
+def get_weather(city: str) -> str:
+    return f"The weather in {city} is sunny, 30°C."
+
+tools = [
+    Tool(
+        name="WeatherTool",
+        func=get_weather,
+        description="Get the weather of a city"
+    )
+]
+
+# Wrap Gemini in LangChain
+llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
+
+# Initialize agent
+agent = initialize_agent(
+    tools, llm, agent="zero-shot-react-description", verbose=True
+)
+
+def run_agent(query: str) -> str:
+    """Run agent with a user query."""
+    response = agent.invoke(query)
+    return str(response)
