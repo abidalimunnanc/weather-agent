@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: weather-agent
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: GOOGLE_CLOUD_PROJECT
+        value: application-ai-472512
+      - key: GOOGLE_CLOUD_LOCATION
+        value: us-central1
+      - key: GOOGLE_GENAI_USE_VERTEXAI
+        value: true
+      - key: GOOGLE_APPLICATION_CREDENTIALS_JSON
+        sync: false   # set manually in dashboard
