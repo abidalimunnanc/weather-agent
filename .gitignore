@@ -18,5 +18,5 @@ __pycache__
 *.pfx
 *.bak
 *.swp
-uv.lock
-*.python-version
+
+
