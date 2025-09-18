@@ -58,7 +58,8 @@ weather-agent/
 5. Deploy 🎉
 
 ---
-![App Screenshot](images/Screenshot from 2025-09-19 02-12-04.png)
+
+<img src="./images/Screenshot from 2025-09-19 02-12-04.png" alt="Weather Agent" width="400"/>
 
 
 
@@ -107,6 +108,10 @@ gcloud run services logs read weather-agent --region=us-central1
 ```bash
 gcloud run services logs tail weather-agent --region=us-central1
 ```
+
+<img src="./images/Screenshot from 2025-09-19 02-12-56.png" alt="Weather Agent" width="400"/>
+
+
 
 ### Metrics
 Go to **Google Cloud Console → Cloud Run → weather-agent → Metrics**  
