@@ -1,5 +1,9 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.agents import initialize_agent, Tool
+from dotenv import load_dotenv
+import os
+# load variables from .env
+load_dotenv()
 
 # Define a simple weather tool
 def get_weather(city: str) -> str:
