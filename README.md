@@ -37,7 +37,7 @@ weather-agent/
 2. Create `.env` file:
    ```ini
    GOOGLE_API_KEY=your_gemini_api_key
-   GOOGLE_CLOUD_PROJECT=application-ai-472512
+   GOOGLE_CLOUD_PROJECT=<PRJECT_ID>
    GOOGLE_CLOUD_LOCATION=us-central1
    ```
 
@@ -68,7 +68,7 @@ weather-agent/
 ### 1. Setup
 ```bash
 gcloud auth login
-gcloud config set project application-ai-472512
+gcloud config set project <PRJECT_ID>
 gcloud services enable run.googleapis.com secretmanager.googleapis.com
 ```
 
@@ -84,12 +84,49 @@ gcloud run deploy weather-agent \
 ### 3. Deploy with Secret Manager (secure option)
 ```bash
 echo -n "your_gemini_api_key" | gcloud secrets create gemini_api_key --data-file=-
-gcloud projects add-iam-policy-binding application-ai-472512 \
-  --member="serviceAccount:$(gcloud projects describe application-ai-472512 --format='value(projectNumber)')-compute@developer.gserviceaccount.com" \
+gcloud projects add-iam-policy-binding <PRJECT_ID> \
+  --member="serviceAccount:$(gcloud projects describe <PRJECT_ID> --format='value(projectNumber)')-compute@developer.gserviceaccount.com" \
   --role="roles/secretmanager.secretAccessor"
 
 gcloud run deploy weather-agent \
   --source . \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --set-secrets GOOGLE_API_KEY=gemini_api_key:latest
+```
+
+---
+
+## 🚀 Deploy to Google Cloud Run (Docker)
+
+### 1. Create Artifact Registry repo
+```bash
+gcloud artifacts repositories create weather-docker \
+  --repository-format=docker \
+  --location=us-central1 \
+  --description="Docker repo for weather agent"
+```
+
+### 2. Authenticate Docker
+```bash
+gcloud auth configure-docker us-central1-docker.pkg.dev
+```
+
+### 3. Build & Push
+```bash
+docker build -t us-central1-docker.pkg.dev/<PRJECT_ID>/weather-docker/weather-agent .
+docker push us-central1-docker.pkg.dev/<PRJECT_ID>/weather-docker/weather-agent
+```
+
+### 4. Verify image exists
+```bash
+gcloud artifacts docker images list us-central1-docker.pkg.dev/<PRJECT_ID>/weather-docker
+```
+
+### 5. Deploy Cloud Run with Docker image
+```bash
+gcloud run deploy weather-agent \
+  --image us-central1-docker.pkg.dev/<PRJECT_ID>/weather-docker/weather-agent \
   --region us-central1 \
   --allow-unauthenticated \
   --set-secrets GOOGLE_API_KEY=gemini_api_key:latest
@@ -111,8 +148,6 @@ gcloud run services logs tail weather-agent --region=us-central1
 
 <img src="./images/Screenshot from 2025-09-19 02-12-56.png" alt="Weather Agent" width="400"/>
 
-
-
 ### Metrics
 Go to **Google Cloud Console → Cloud Run → weather-agent → Metrics**  
 See:
@@ -132,14 +167,14 @@ Cloud Run scales automatically:
 
 ```bash
 gcloud run deploy weather-agent \
-  --source . \
+  --image us-central1-docker.pkg.dev/<PRJECT_ID>/weather-docker/weather-agent \
   --region us-central1 \
   --allow-unauthenticated \
   --concurrency=20 \
   --max-instances=50 \
-  --set-env-vars GOOGLE_API_KEY="your_gemini_api_key"
+  --set-secrets GOOGLE_API_KEY=gemini_api_key:latest
 ```
 
 ---
 
-✅ You now have a **scalable AI weather agent** deployed both on **Render** and **Google Cloud Run**.  
+✅ You now have a **scalable AI weather agent** deployed both on **Render** and **Google Cloud Run (Docker or Buildpacks)**.  
