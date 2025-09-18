@@ -14,5 +14,5 @@ services:
         value: us-central1
       - key: GOOGLE_GENAI_USE_VERTEXAI
         value: true
-      - key: GOOGLE_APPLICATION_CREDENTIALS_JSON
-        sync: false   # set manually in dashboard
+      - key: GOOGLE_API_KEY
+        value: true

@@ -16,9 +16,10 @@ tools = [
         description="Get the weather of a city"
     )
 ]
-
-# Wrap Gemini in LangChain
-llm = ChatGoogleGenerativeAI(model="gemini-2.5-flash")
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash",
+    api_key=os.environ["GOOGLE_API_KEY"]  # ✅ explicit API key
+)
 
 # Initialize agent
 agent = initialize_agent(
