@@ -9,7 +9,7 @@ services:
     startCommand: python app.py
     envVars:
       - key: GOOGLE_CLOUD_PROJECT
-        value: application-ai-472512
+        value: PROJECT-ID
       - key: GOOGLE_CLOUD_LOCATION
         value: us-central1
       - key: GOOGLE_GENAI_USE_VERTEXAI
