@@ -1,4 +1,12 @@
-services:
+#################################################################
+# Example render.yaml                                           #
+# Do not use this file directly! Consult it for reference only. #
+#################################################################
+
+previews:
+  generation: automatic # Enable preview environments
+
+ervices:
   - type: web
     name: weather-agent
     env: python
